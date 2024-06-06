@@ -1,1 +1,11 @@
 # RESERVATION_BUS
+
+#**************************LISTE DES MEMBRES DU GORUPE 32*****************************
+# KALUMBA ILUNGA ROONEY
+# LUKELE MATANDA GLADIS
+# MALOBA KAEMBE BENITA
+# ELIZA NKASA ELISEE
+
+
+
+# **************************REPARTITION DES TACHES ET ORGANISATION DU TRAVAIL EN GROUPE ***************************

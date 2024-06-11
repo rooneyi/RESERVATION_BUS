@@ -1,0 +1,3 @@
+/home/rooney/Bureau/RESERVATION_BUS/cmake-build-debug/CMakeFiles/RESERVATION_BUS.dir
+/home/rooney/Bureau/RESERVATION_BUS/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/rooney/Bureau/RESERVATION_BUS/cmake-build-debug/CMakeFiles/rebuild_cache.dir

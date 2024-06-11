@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1717483948 source:/home/rooney/Bureau/RESERVATION_BUS/main.c
+	<stdio.h>
+	<stdlib.h>
+	"starter_bus.h"
+
+1717483634 /home/rooney/Bureau/RESERVATION_BUS/menu.h
+
+1717962864 source:/home/rooney/Bureau/RESERVATION_BUS/menu.c
+	<stdio.h>
+	<stdlib.h>
+
+1717487612 source:/home/rooney/Bureau/RESERVATION_BUS/operation_bus.c
+	<stdio.h>
+	<stdlib.h>
+
+1717483719 /home/rooney/Bureau/RESERVATION_BUS/starter_bus.h
+
+1717487354 source:/home/rooney/Bureau/RESERVATION_BUS/starter_bus.c
+	<stdio.h>
+	<stdlib.h>
+	"menu.h"
+

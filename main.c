@@ -99,6 +99,7 @@ int option2()
         }
 }
 int option3()
+
 {
         int KAR;
         clean();

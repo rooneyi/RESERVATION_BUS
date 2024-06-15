@@ -1,1 +1,2 @@
 void menu();
+void menuMobile();

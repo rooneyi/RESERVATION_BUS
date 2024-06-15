@@ -38,8 +38,23 @@ int compteur_reservation = 0;       // Compteur de reservation
 int ticket_reserver = 0;   // compteur pour savoir combien de ticket reserver
 
 
+/*
+void load_books() {
+    FILE *file = fopen("books.txt", "r");
+    if (file == NULL) {
+        printf("Erreur d'ouverture du fichier des livres!\n");
+        return;
+    }
+    book_count = 0;
+    while (fscanf(file, "%d %s %s %d %d\n", &books[book_count].id, books[book_count].title, books[book_count].author, &books[book_count].year, &books[book_count].is_borrowed) != EOF) {
+        book_count++;
+    }
+    fclose(file);
+}
+*/
+
 // Fonction pour charger les reservation a partir du fichier reservation
-void reservation_ticket() {
+void charger_reservation_ticket() {
     FILE *file = fopen("reservation.txt", "r");
     if (file == NULL) {
         printf("Erreur d'ouverture du fichier des resrevation!\n");
@@ -52,7 +67,7 @@ void reservation_ticket() {
             reservations[compteur_reservation].prenom,
             reservations[compteur_reservation].date_reservation,
             reservations[compteur_reservation].genre,
-            &reservations[compteur_reservation].Payer)){
+            &reservations[compteur_reservation].Payer) !=EOF){
             compteur_reservation++;
     }
     fclose(file);
@@ -63,9 +78,9 @@ void reservation_ticket() {
 void rechercher_client() {
     char nom[100];
     int id_entry;
-    printf("Entrez le nom du client a rechercher ");
+    printf("Entrez le nom du client a rechercher :");
     scanf("%s", nom);
-    printf("Entrez l'id a rechercher ");
+    printf("Entrez l'id a rechercher :");
     scanf("%d",id_entry);
     for (int i = 0; i < compteur_reservation; i++) {
         if (strstr(reservations[i].nom, nom) || strstr(reservations[i].id, id_entry)) {
@@ -125,17 +140,17 @@ void ajout_ticket_reser() {
     }
     */
     reservations[compteur_reservation].id = compteur_reservation + 1;
-    printf("Entrez le nom ");
-    scanf("%s", reservations[compteur_reservation].nom);
-    printf("Entrez le prenom ");
-    scanf("%s", reservations[compteur_reservation].prenom);
+    printf("Entrez le nom :");
+    scanf("--> %s", reservations[compteur_reservation].nom);
+    printf("Entrez le prenom :");
+    scanf("--> %s", reservations[compteur_reservation].prenom);
     printf("Entrez le genre ");
-    scanf("%s", reservations[compteur_reservation].genre);
-    printf("Entrez la destination ");
+    scanf("--> %s", reservations[compteur_reservation].genre);
+    printf("Entrez la destination :");
     destination_posible();
-    printf("Entrez la destination (en Toute lettre)");
+    printf("Entrez la destination (en Toute lettre) :");
     scanf("%s", reservations[compteur_reservation].destination);
-    printf("Entrez la date de reservation ");
+    printf("Entrez la date de reservation :");
     scanf("%s", reservations[compteur_reservation].date_reservation);
 
     //printf("Entrez le numero de telephone ");

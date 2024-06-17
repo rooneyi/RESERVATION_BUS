@@ -83,10 +83,10 @@ void rechercher_client() {
     int id_entry;
     printf("Entrez le nom du client a rechercher :");
     scanf("%s", nom);
-    printf("Entrez l'id a rechercher :");
-    scanf("%d",id_entry);
+    //printf("Entrez l'id a rechercher :");
+    //scanf("%d",&id_entry);
     for (int i = 0; i < compteur_reservation; i++) {
-        if (strstr(reservations[i].nom, nom) || strstr(reservations[i].id, id_entry)) {
+        if (strstr(reservations[i].nom, nom) /*|| strstr(reservations[i].id, id_entry)*/) {
             printf("ID: %d \n NOM: %s \n PRENOM: %s \n DATE RESERVATION: %s \n DESTINATION: %s \n GENRE:%s\n",
                     reservations[i].id,
                     reservations[i].nom,
@@ -104,35 +104,33 @@ void rechercher_client() {
 
 
 void enregister_ticket() {
-    FILE *file = fopen("reservation.txt", "w");
+    FILE *file = fopen("reservation.txt","w");
     if (file == NULL) {
         printf("Erreur d'ouverture du fichier des reservations!\n");
         return;
     }
     for (int i = 0; i < compteur_reservation; i++) {
-        (fscanf(file, "%d %s %s %s %s %d\n",
-            &reservations[compteur_reservation].id,
-            reservations[compteur_reservation].nom,
-            reservations[compteur_reservation].prenom,
-            reservations[compteur_reservation].date_reservation,
-            reservations[compteur_reservation].genre
-            ));
+        fprintf(file, "%d %s %s %s %s \n",
+            reservations[i].id,
+            reservations[i].nom,
+            reservations[i].prenom,
+            reservations[i].date_reservation,
+            reservations[i].genre
+            );
     }
     fclose(file);
 }
-
-
-
+//afficher le trajet disponible
 void destination_posible(){
     int i = 0;
     char ville[][100]={"1.Likasi","2.Lubumbashi","3.kolwezi","4.Kasumbalesa"};
 
-     printf("\n\n+-------------------------------+\n\n");
+     printf("\n\n                         +-------------------------------+\n\n");
     //afficher toute les destination
     for(;i<=3;i++){
-        printf("%s \n",ville[i]);
+        printf("                          %s \n",ville[i]);
     }
-    printf("\n\n+-------------------------------+\n\n");
+    printf("\n\n                          +-------------------------------+\n\n");
 
 }
 
@@ -152,21 +150,27 @@ void siegeDisponible(){
 void ajout_ticket_reser() {
 
     reservations[compteur_reservation].id = compteur_reservation + 1;
-    printf("Entrez le nom :");
-    scanf("--> %s", reservations[compteur_reservation].nom);
-    printf("Entrez le prenom :");
-    scanf("--> %s", reservations[compteur_reservation].prenom);
-    printf("Entrez le genre ");
-    scanf("--> %s", reservations[compteur_reservation].genre);
-    printf("Entrez la destination :");
+    printf(" Entrez le nom :\n");
+    printf("--> :");
+    scanf("%s", reservations[compteur_reservation].nom);
+    printf("Entrez le prenom :\n");
+    printf("--> ");
+    scanf("%s", reservations[compteur_reservation].prenom);
+    printf("Entrez le genre \n");
+    printf("--> ");
+    scanf("%s", reservations[compteur_reservation].genre);
+    printf("Entrez la destination \n");
+    printf("--> ");
     destination_posible();
-    siegeDisponible();
+    //siegeDisponible();
 
-    printf("--> Entrez la destination (en Toute lettre) :");
+    printf("--> Entrez la destination (en Toute lettre) \n");
+    printf("--> ");
     scanf("%s", reservations[compteur_reservation].destination);
-    printf("--> Entrez la date de reservation :");
+    printf("--> Entrez la date de reservation \n");
+    printf("--> ");
     scanf("%s", reservations[compteur_reservation].date_reservation);
-
+    compteur_reservation++;
     //printf("Entrez le numero de telephone ");
     //scanf("%s", reservations[compteur_reservation].tele);
 

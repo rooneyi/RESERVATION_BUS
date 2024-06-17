@@ -18,29 +18,48 @@ void menu(){
             case 1:
                 system("clear");
                 do{
-
+                            system("clear");
                             Menu_principal_reser();
                             printf("Selectionner une option :");
                             scanf("%d",&choix);
                             switch (choix){
                                 case 1:
                                     system("clear");
-                                    destination_posible();
+                                    do{
+                                      printf("\n   -------------------------------------------------------------------------\n\n");
+                                      printf("\n   |                               1.Destination possible                    |  \n");
+                                      printf("\n   |                               2.Precedant                               |  \n");
+                                      printf("\n   -------------------------------------------------------------------------\n\n");
+                                      printf("\n   Selectionner une option :\n\n");
+                                      scanf("%d",&choix);
+                                      switch(choix){
+                                          case 1:
+                                                system("clear");
+                                                destination_posible();
+                                                break;
+                                         default:
+                                                system("clear");
+                                                printf("\n Au revoir\n\n");
+                                                break;
+                                            }
+                                      }while(choix != 2);
+
                                     break;
                                 case 2:
                                     system("clear");
                                     ajout_ticket_reser();
                                     break;
                                 case 3:
+                                    system("clear");
                                     payement();
                                     break;
                                 default:
-                                    printf("Au revoir");
+                                    printf("\n    ******* Menu Precedant ********\n\n");
                                     break;
                             }
 
                         }while(choix != 4);
-                ajout_ticket_reser();
+
                 break;
             case 2:
                 system("clear");
@@ -55,7 +74,9 @@ void menu(){
                 payement();
                 break;
             default:
-                printf("Au revoir");
+                system("clear");
+                printf("\n\nAu revoir\n\n");
+                system("clear");
                 break;
         }
 
@@ -82,13 +103,14 @@ void menuMobile()
         scanf("%d", &choix);
 
         // Effacer la console
-        system("cls");
+        system("clear");
 
         // G�rer le choix de l'utilisateur
         switch (choix) {
             case 0:
                 // Si l'utilisateur a choisi l'option 0, g�rer les soldes des comptes
                 gererSoldes();
+                //
                 break;
             case 1:
                 // Si l'utilisateur a choisi l'option 1, traiter les transactions de d�p�t

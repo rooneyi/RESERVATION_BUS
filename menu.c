@@ -10,10 +10,10 @@ void Menu_principal(){
     printf("|+------------------------ Bienvenu sur ReserTrans -----------------------+ |\n");
     printf("|                                                                           |\n");
     printf("|                         1.   Reserver votre Bus                           |\n");
-    printf("|                         2.   Getsion des Utilisateur                      |\n");
-    printf("|                         3.    Rechercher un client                        |\n");
-    printf("|                         4.    Payement avec Mobile Money                  |\n");
-    printf("|                         5.      Quitter                                   |\n");
+    printf("|                         2.   Tous les Utilisateur                         |\n");
+    printf("|                         3.   Rechercher un client                         |\n");
+    printf("|                         4.   Payement avec Mobile Money                   |\n");
+    printf("|                         5.   Quitter                                      |\n");
     printf("|+--------------------------------------------------------------------------+ \n\n");
 
 }
@@ -22,10 +22,10 @@ void Menu_principal_reser(){
     printf("|+------------------------ Reservation -----------------------+ |\n");
     printf("|                                                               |\n");
     printf("|                         1.    trajet diponible                |\n");
-    printf("|                         3.    Reserver votre Bus              |\n");
-    printf("|                         4.    Payement avec Mobile Money      |\n");
-    printf("|                         5.      Quitter                       |\n");
-    printf("|+--------------------------------------------------------------+ \n\n");
+    printf("|                         2.    Reserver votre Bus              |\n");
+    printf("|                         3.    Payement avec Mobile Money      |\n");
+    printf("|                         4.    Quitter                         |\n");
+    printf("+---------------------------------------------------------------+ \n\n");
 
 }
 
@@ -141,7 +141,7 @@ void gererRetrait()
     afficherMenu();
 
     // Effacer la console
-    system("cls");
+    system("clear");
 
     printf("\t\tEffectuer un retrait\n\n");
 
@@ -173,7 +173,7 @@ void gererTransactions()
     afficherMenu();
 
     // Effacer la console
-    system("cls");
+    system("clear");
 
     printf("\t\tListe des trasanctions effectuees\n\n");
 

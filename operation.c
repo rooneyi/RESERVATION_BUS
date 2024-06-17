@@ -31,10 +31,7 @@ typedef struct {
 } client;
 
 /*-------structure pour stocker les infos du client qui a reserver ------*/
-typedef struct {
-    int id;             // Identifiant de l'emprunteur
-    char name[100];     // Nom de l'emprunteur
-} Reserver_Decision;
+
 
 
 int compteur_reservation = 0;       // Compteur de reservation

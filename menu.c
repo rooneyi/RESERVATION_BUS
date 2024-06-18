@@ -107,7 +107,7 @@ void gererDepot()
     afficherMenu();
 
     // Effacer la console
-    system("cls");
+    system("clear");
 
     printf("\t\tEffectuer un depot\n\n");
 

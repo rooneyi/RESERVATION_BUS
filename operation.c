@@ -16,6 +16,8 @@ typedef struct {
     char date_reservation[11];
     char genre[1];   // Date de reservation (format YYYY-MM-DD)
     int siegeDispo;
+    int payer;
+    int montant;
 } TicketReservation;
 
 //creation de 1000 structure de reservation
@@ -31,25 +33,32 @@ typedef struct {
 } client;
 
 /*-------structure pour stocker les infos du client qui a reserver ------*/
-
+typedef struct {
+    int id;             // Identifiant de l'emprunteur
+    char name[100];     // Nom de l'emprunteur
+} Reserver_Decision;
 
 
 int compteur_reservation = 0;       // Compteur de reservation
 int ticket_reserver = 0;   // compteur pour savoir combien de ticket reserver
-#define MAX_SIEGE 30;
+int prixBus[][4]={15000,20000,30000,40000};
 int siegeDispo=0;
 
 
 void display_reservations_all() {
     for (int i = 0; i < compteur_reservation; i++) {
-        printf("ID: %d \n NOM: %s \n PRENOM: %s \n DATE RESERVATION: %s \n DESTINATION: %s \n GENRE:%s\n",
+    printf("--------------------------------------------------------------------------------------------------\n\n");
+
+        printf("   ID: %d\nNOM:%s\nPRENOM:%s\nDATE RESERVATION:%s\nDESTINATION:%s\nGENRE:%s\n",
                     reservations[i].id,
                     reservations[i].nom,
                     reservations[i].prenom,
                     reservations[i].date_reservation,
                     reservations[i].destination,
                     reservations[i].genre);
+
     }
+    printf("\n\n+--------------------------------------------------------------------------------------------------+");
 }
 
 
@@ -156,14 +165,31 @@ void ajout_ticket_reser() {
     printf("Entrez le genre \n");
     printf("--> ");
     scanf("%s", reservations[compteur_reservation].genre);
-    printf("Entrez la destination \n");
-    printf("--> ");
-    destination_posible();
-    //siegeDisponible();
 
-    printf("--> Entrez la destination (en Toute lettre) \n");
+    destination_posible();
+    int choix_destination;
+    printf("Entrez la destination (numero)\n");
     printf("--> ");
-    scanf("%s", reservations[compteur_reservation].destination);
+    scanf("%d", &choix_destination);
+    switch (choix_destination) {
+        case 1:
+            strcpy(reservations[compteur_reservation].destination, "Likasi");
+            break;
+        case 2:
+            strcpy(reservations[compteur_reservation].destination, "Lubumbashi");
+            break;
+        case 3:
+            strcpy(reservations[compteur_reservation].destination, "Kolwezi");
+            break;
+        case 4:
+            strcpy(reservations[compteur_reservation].destination, "Kasumbalesa");
+            break;
+        default:
+            strcpy(reservations[compteur_reservation].destination, "Inconnue");
+            break;
+    }
+
+    //siegeDisponible();
     printf("--> Entrez la date de reservation \n");
     printf("--> ");
     scanf("%s", reservations[compteur_reservation].date_reservation);
@@ -291,8 +317,14 @@ double retraitMontant(Devise devise, double montantRetrait)
 
     transactions = enregistrerTransaction(transactions, &taille, transaction);
 
+    /*printf("payer le bus");
+    scanf("%d",reservations[compteur_reservation].montant);
     soldes[devise] -= montantRetrait;
 
+    reservations.payer =0;
+    payer = montantRetrait;
+    //payer = montantRetrait - prixBus
+    */
     return verifierSolde(devise);
 }
 

@@ -98,11 +98,6 @@ typedef struct {
     int id_Client;
 } client;
 
-/*-------structure pour stocker les infos du client qui a reserver ------*/
-typedef struct {
-    int id;             // Identifiant de l'emprunteur
-    char name[100];     // Nom de l'emprunteur
-} Reserver_Decision;
 
 
 int compteur_reservation = 0;       // Compteur de reservation
@@ -111,22 +106,6 @@ int prixBus[][4]={15000,20000,30000,40000};
 int siegeDispo=0;
 
 
-//void display_reservations_all() {
-//    for (int i = 0; i < compteur_reservation; i++) {
-//    printf("--------------------------------------------------------------------------------------------------\n\n");
-//
-//        printf("   ID: %d\nNOM:%s\nPRENOM:%s\nDATE RESERVATION:%s\nDESTINATION:%s\nGENRE:%s\n",
-//                    reservations[i].id,
-//                    reservations[i].nom,
-//                    reservations[i].prenom,
-//                    reservations[i].date_reservation,
-//                    reservations[i].destination,
-//                    reservations[i].genre,
-//                    reservations[i].payer?"OUI":"NON");
-//
-//    }
-//    printf("\n\n+--------------------------------------------------------------------------------------------------+");
-//}
 
 
 // Fonction pour payer un ticket

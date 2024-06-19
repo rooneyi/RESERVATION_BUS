@@ -7,6 +7,69 @@
 
 
 
+
+#define MAX_USERS 2
+
+typedef struct {
+    char username[50];
+    char password[50];
+} User;
+
+User users[MAX_USERS];
+int user_count = 0;
+
+
+
+
+
+
+void ajouter_utilisateur(const char *username, const char *password) {
+    if (user_count < MAX_USERS) {
+        strcpy(users[user_count].username, username);
+        strcpy(users[user_count].password, password);
+        user_count++;
+    } else {
+        printf("Limite d'utilisateurs atteinte!\n");
+    }
+}
+
+// Fonction pour vérifier l'authentification
+int verifier_utilisateur(const char *username, const char *password) {
+    for (int i = 0; i < user_count; i++) {
+        if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// Fonction pour charger les utilisateurs à partir d'un fichier
+void charger_utilisateurs() {
+    FILE *file = fopen("users.txt", "r");
+    if (file == NULL) {
+        printf("Erreur d'ouverture du fichier des utilisateurs!\n");
+        return;
+    }
+    user_count = 0;
+    while (fscanf(file, "%s %s", users[user_count].username, users[user_count].password) != EOF) {
+        user_count++;
+    }
+    fclose(file);
+}
+
+// Fonction pour enregistrer les utilisateurs dans un fichier
+void enregistrer_utilisateurs() {
+    FILE *file = fopen("users.txt", "w");
+    if (file == NULL) {
+        printf("Erreur d'ouverture du fichier des utilisateurs!\n");
+        return;
+    }
+    for (int i = 0; i < user_count; i++) {
+        fprintf(file, "%s %s\n", users[i].username, users[i].password);
+    }
+    fclose(file);
+}
+
 // Structure pour stocker les informations d'une reseravtion
 typedef struct {
     int id;             // Identifiant du ticket
@@ -15,9 +78,12 @@ typedef struct {
     char destination[100];
     char date_reservation[11];
     char genre[1];   // Date de reservation (format YYYY-MM-DD)
+    int siege;
     int siegeDispo;
     int payer;
-    int montant;
+    Devise devise; // Devise utilisée pour le paiement
+
+
 } TicketReservation;
 
 //creation de 1000 structure de reservation
@@ -45,26 +111,65 @@ int prixBus[][4]={15000,20000,30000,40000};
 int siegeDispo=0;
 
 
-void display_reservations_all() {
+//void display_reservations_all() {
+//    for (int i = 0; i < compteur_reservation; i++) {
+//    printf("--------------------------------------------------------------------------------------------------\n\n");
+//
+//        printf("   ID: %d\nNOM:%s\nPRENOM:%s\nDATE RESERVATION:%s\nDESTINATION:%s\nGENRE:%s\n",
+//                    reservations[i].id,
+//                    reservations[i].nom,
+//                    reservations[i].prenom,
+//                    reservations[i].date_reservation,
+//                    reservations[i].destination,
+//                    reservations[i].genre,
+//                    reservations[i].payer?"OUI":"NON");
+//
+//    }
+//    printf("\n\n+--------------------------------------------------------------------------------------------------+");
+//}
+
+
+// Fonction pour payer un ticket
+void payer_ticket() {
+    int id_ticket;
+    printf("Entrez l'ID du ticket à payer :\n--> ");
+    scanf("%d", &id_ticket);
     for (int i = 0; i < compteur_reservation; i++) {
-    printf("--------------------------------------------------------------------------------------------------\n\n");
-
-        printf("   ID: %d\nNOM:%s\nPRENOM:%s\nDATE RESERVATION:%s\nDESTINATION:%s\nGENRE:%s\n",
-                    reservations[i].id,
-                    reservations[i].nom,
-                    reservations[i].prenom,
-                    reservations[i].date_reservation,
-                    reservations[i].destination,
-                    reservations[i].genre);
-
+        if (reservations[i].id == id_ticket) {
+            double montantDepot;
+            int deviseChoix;
+            //char username[50], password[50];
+            //printf("Authentification requise pour le paiement.\n");
+//            printf("Nom d'utilisateur : ");
+//            scanf("%s", username);
+//            printf("Mot de passe : ");
+//            scanf("%s", password);
+//
+//            if (verifier_utilisateur(username, password)) {
+               // printf("Authentification réussie.\n");
+                printf("Choisissez la devise pour le paiement (1 pour USD, 2 pour FC) :\n--> ");
+                scanf("%d", &deviseChoix);
+                Devise devise = (deviseChoix == 1) ? USD : FC;
+                printf("Entrez le montant à déposer pour le paiement du ticket :\n--> ");
+                scanf("%lf", &montantDepot);
+                effectuerDepot(devise, montantDepot); // Utilisation de la devise choisie
+                reservations[i].payer = 1; // Marquer comme payé
+                reservations[i].devise = devise; // Enregistrer la devise utilisée
+                enregister_ticket(); // Sauvegarde après paiement
+                printf("Ticket payé avec succès!\n");
+//            } else {
+//                printf("Authentification échouée. Paiement annulé.\n");
+//            }
+            return;
+        }
     }
-    printf("\n\n+--------------------------------------------------------------------------------------------------+");
+    printf("Ticket non trouvé.\n");
 }
 
 
 // Fonction pour charger les reservation a partir du fichier reservation
 void charger_reservation_ticket() {
-    FILE *file = fopen("reservation.txt", "r");
+    FILE *file = fopen("reservation_ticket.txt", "r");
     if (file == NULL) {
         printf("Erreur d'ouverture du fichier des resrevation!\n");
         return;
@@ -75,12 +180,41 @@ void charger_reservation_ticket() {
             reservations[compteur_reservation].nom,
             reservations[compteur_reservation].prenom,
             reservations[compteur_reservation].date_reservation,
-            reservations[compteur_reservation].genre
+            reservations[compteur_reservation].genre,
+            &reservations[compteur_reservation].payer,
+            (int*)&reservations[compteur_reservation].devise,
+            &reservations[compteur_reservation].siege
             ) !=EOF){
             compteur_reservation++;
     }
     fclose(file);
 }
+
+
+void display_reservations_all() {
+    for (int i = 0; i < compteur_reservation; i++) {
+        printf("ID: %d \n NOM: %s \n PRENOM: %s \n DATE RESERVATION: %s \n DESTINATION: %s \n GENRE:%s\n",
+                    reservations[i].id,
+                    reservations[i].nom,
+                    reservations[i].prenom,
+                    reservations[i].date_reservation,
+                    reservations[i].destination,
+                    reservations[i].genre);
+        if (reservations[i].siegeDispo == 1) {
+            printf("Siège attribué : Oui\n");
+        } else {
+            printf("Siège attribué : Non\n");
+        }
+        if (reservations[i].payer == 1) {
+            printf("Paiement effectué : Oui\n");
+        } else {
+            printf("Paiement effectué : Non\n");
+        }
+        printf("Devise utilisée : %s\n", reservations[i].devise == USD ? "USD" : "FC");
+        printf("\n");
+    }
+}
+
 
 
 //fonction pour rechercher un client grace a l'id ou au nom
@@ -93,13 +227,15 @@ void rechercher_client() {
     //scanf("%d",&id_entry);
     for (int i = 0; i < compteur_reservation; i++) {
         if (strstr(reservations[i].nom, nom) /*|| strstr(reservations[i].id, id_entry)*/) {
-            printf("ID: %d \n NOM: %s \n PRENOM: %s \n DATE RESERVATION: %s \n DESTINATION: %s \n GENRE:%s\n",
+            printf("ID: %d \n NOM: %s \n PRENOM: %s \n DATE RESERVATION: %s \n DESTINATION: %s \n GENRE:%s\n SIEGE: %d\n MONTANT: %f",
                     reservations[i].id,
                     reservations[i].nom,
                     reservations[i].prenom,
                     reservations[i].date_reservation,
                     reservations[i].destination,
-                    reservations[i].genre);
+                    reservations[i].genre,
+                    reservations[i].siege,
+                    reservations[i].payer);
         }
     }
 }
@@ -110,7 +246,7 @@ void rechercher_client() {
 
 
 void enregister_ticket() {
-    FILE *file = fopen("reservation.txt","w");
+    FILE *file = fopen("reservation_ticket.txt","w");
     if (file == NULL) {
         printf("Erreur d'ouverture du fichier des reservations!\n");
         return;
@@ -121,7 +257,10 @@ void enregister_ticket() {
             reservations[i].nom,
             reservations[i].prenom,
             reservations[i].date_reservation,
-            reservations[i].genre
+            reservations[i].genre,
+            reservations[i].payer,
+            reservations[i].devise,
+            reservations[i].siege
             );
     }
     fclose(file);
@@ -142,15 +281,28 @@ void destination_posible(){
 
 
 
-void siegeDisponible(){
-    int siegeDispoDis[][20]={1,2,3,4,5,6,7,8,9,10};
-    for (int i=0;i<=9;i++){
-        printf(" ** siege disponible * \n ");
-        printf(" \n %d",siegeDispoDis[i]);
+void siegeDisponible() {
+    int siegesTotal = 30;
+    int sieges[siegesTotal];
+    for (int i = 0; i < siegesTotal; i++) {
+        sieges[i] = 1; // Marquer tous les sièges comme disponibles
     }
-    printf("Selectionner un siege :");
-    scanf("%d",reservations[compteur_reservation].siegeDispo);
-    //siegeDispo = MAX_SIEGE - siegeDispoDis[i];
+    for (int i = 0; i < compteur_reservation; i++) {
+        if (reservations[i].siegeDispo == 1) {
+            sieges[reservations[i].siege - 1] = 0; // Marquer les sièges réservés comme indisponibles
+        }
+    }
+    printf("Sièges disponibles :\n");
+    for (int i = 0; i < siegesTotal; i++) {
+        if (sieges[i] == 1) {
+            printf("%d ", i + 1);
+        }
+    }
+    printf("\nChoisissez un siège : ");
+    int choixSiege;
+    scanf("%d", &choixSiege);
+    reservations[compteur_reservation].siege = choixSiege;
+    reservations[compteur_reservation].siegeDispo = 1; // Marquer le siège comme réservé
 }
 
 void ajout_ticket_reser() {
@@ -167,8 +319,8 @@ void ajout_ticket_reser() {
     scanf("%s", reservations[compteur_reservation].genre);
 
     destination_posible();
+    printf("Entrez la destination (saisissez le numéro) :\n--> ");
     int choix_destination;
-    printf("Entrez la destination (numero)\n");
     printf("--> ");
     scanf("%d", &choix_destination);
     switch (choix_destination) {
@@ -189,18 +341,60 @@ void ajout_ticket_reser() {
             break;
     }
 
-    //siegeDisponible();
-    printf("--> Entrez la date de reservation \n");
+    siegeDisponible();
+    printf("Entrez la date de reservation (YYYY-MM-DD) :\n--> ");
     printf("--> ");
-    scanf("%s", reservations[compteur_reservation].date_reservation);
-    compteur_reservation++;
-    //printf("Entrez le numero de telephone ");
-    //scanf("%s", reservations[compteur_reservation].tele);
 
+    scanf("%s", reservations[compteur_reservation].date_reservation);
+    reservations[compteur_reservation].payer = 0;
+    compteur_reservation++;
 
     enregister_ticket();
     printf("Ticket Reserver avec succes \n");
+     // Paiement immédiat après réservation
+    double montantDepot;
+    int deviseChoix;
+    char username[50], password[50];
+    printf("Authentification requise pour le paiement.\n");
+    printf("Nom d'utilisateur : ");
+    scanf("%s", username);
+    printf("Mot de passe : ");
+    scanf("%s", password);
+
+    if (verifier_utilisateur(username, password)) {
+        printf("Authentification réussie.\n");
+        printf("Choisissez la devise pour le paiement (1 pour USD, 2 pour FC) :\n--> ");
+        scanf("%d", &deviseChoix);
+        Devise devise = (deviseChoix == 1) ? USD : FC;
+        printf("Entrez le montant à déposer pour le paiement du ticket :\n--> ");
+        scanf("%lf", &montantDepot);
+        effectuerDepot(devise, montantDepot); // Utilisation de la devise choisie
+        reservations[compteur_reservation - 1].payer = 1; // Marquer comme payé
+        reservations[compteur_reservation - 1].devise = devise; // Enregistrer la devise utilisée
+        enregister_ticket(); // Sauvegarde après paiement
+        printf("Ticket payé avec succès!\n");
+    } else {
+        printf("Authentification échouée. Paiement annulé.\n");
+    }
 }
+/*
+void payer_ticket() {
+    int id_ticket;
+    printf("Entrez l'ID du ticket à payer :\n--> ");
+    scanf("%d", &id_ticket);
+    for (int i = 0; i < compteur_reservation; i++) {
+        if (reservations[i].id == id_ticket) {
+            reservations[i].paye = 1;
+            printf("Paiement effectué avec succès pour le ticket ID : %d\n", id_ticket);
+            enregister_ticket(); // Sauvegarde des modifications après le paiement
+            return;
+        }
+    }
+    printf("Aucun ticket trouvé avec l'ID : %d\n", id_ticket);
+}
+*/
+
+
 
 
 

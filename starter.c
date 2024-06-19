@@ -26,10 +26,10 @@ void menu(){
                                 case 1:
                                     system("clear");
                                     do{
-                                      printf("\n   -------------------------------------------------------------------------\n\n");
+                                      printf("\n   +-------------------------------------------------------------------------+\n\n");
                                       printf("\n   |                               1.Destination possible                    |  \n");
                                       printf("\n   |                               2.Precedant                               |  \n");
-                                      printf("\n   -------------------------------------------------------------------------\n\n");
+                                      printf("\n   +-------------------------------------------------------------------------+\n\n");
                                       printf("\n   Selectionner une option :\n\n");
                                       scanf("%d",&choix);
                                       switch(choix){
@@ -71,16 +71,19 @@ void menu(){
                 break;
             case 4:
                 system("clear");
-                payement();
+                payer_ticket();
+                break;
+            case 5:
+                system("clear");
+                printf("\n\n+--------------------Merci d'utiser notre Servicer----------------------+\n\n");
+
                 break;
             default:
-                system("clear");
-                printf("\n\nAu revoir\n\n");
-                system("clear");
+                printf("Choix invalide. Veuillez réessayer.\n");
                 break;
         }
 
-    }while(choix != 4);
+    }while(choix != 5);
 
 }
 

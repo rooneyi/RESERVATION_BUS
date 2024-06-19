@@ -6,7 +6,9 @@
 
 int main()
 {
-    //charger_reservation_ticket();
-    //menu();
+
+    charger_reservation_ticket();
+    menu();
+
     return 0;
 }

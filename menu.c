@@ -1,181 +1,170 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h>
-
-#include <stdlib.h>
+#include <string.h>
 
 #include "operation.h"
 
-void Menu_principal(){
-    printf("|+------------------------ Bienvenu sur ReserTrans -----------------------+ |\n");
-    printf("|                                                                           |\n");
-    printf("|                         1.   Reserver votre Bus                           |\n");
-    printf("|                         2.   Tous les Utilisateur                         |\n");
-    printf("|                         3.   Rechercher un client                         |\n");
-    printf("|                         4.   Payement avec Mobile Money                   |\n");
-    printf("|                         5.   Quitter                                      |\n");
-    printf("|+--------------------------------------------------------------------------+ \n\n");
+#define WIDTH 80  // Largeur de la fenêtre à 80 caractères
 
+// Codes ANSI pour les couleurs et les styles
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+#define BOLD "\033[1m"
+#define UNDERLINE "\033[4m"
+
+// Fonction pour centrer le texte
+void centerText(const char* text) {
+    int len = strlen(text);
+    int padding = (WIDTH - len) / 2;
+    for (int i = 0; i < padding; i++) {
+        printf(" ");
+    }
+    printf("%s\n", text);
 }
 
-void Menu_principal_reser(){
-    printf("|+------------------------ Reservation -----------------------+ |\n");
-    printf("|                                                               |\n");
-    printf("|                         1.    trajet diponible                |\n");
-    printf("|                         2.    Reserver votre Bus              |\n");
-    printf("|                         3.    Payement avec Mobile Money      |\n");
-    printf("|                         4.    Quitter                         |\n");
-    printf("+---------------------------------------------------------------+ \n\n");
-
+// Fonction pour centrer et formater le texte avec des couleurs
+void centerTextColored(const char* color, const char* text) {
+    int len = strlen(text);
+    int padding = (WIDTH - len) / 2;
+    for (int i = 0; i < padding; i++) {
+        printf(" ");
+    }
+    printf("%s%s%s\n", color, text, RESET);
 }
 
+// Fonction pour centrer et formater le texte avec des couleurs et des styles
+void centerTextStyled(const char* color, const char* style, const char* text) {
+    int len = strlen(text);
+    int padding = (WIDTH - len) / 2;
+    for (int i = 0; i < padding; i++) {
+        printf(" ");
+    }
+    printf("%s%s%s%s\n", style, color, text, RESET);
+}
 
+// Fonction pour centrer le texte formaté
+void centerTextFormatted(const char* format, ...) {
+    char buffer[WIDTH + 1];
+    va_list args;
+    //va_start(args, format);
+    vsnprintf(buffer, WIDTH + 1, format, args);
+    //va_end(args);
+    centerText(buffer);
+}
+
+void Menu_principal() {
+    centerTextStyled(BLUE,BOLD,  "+------------------------ Bienvenu sur ReserTrans --------------------------+");
+    centerTextStyled(BLUE,BOLD,  "|                                                                           |");
+    centerTextStyled(BLUE,BOLD,  "|                      1.   Reserver votre Bus                              |");
+    centerTextStyled(BLUE,BOLD,  "|                      2.   Tous les Ticket                                 |");
+    centerTextStyled(BLUE,BOLD,  "|                      3.   Rechercher un client                            |");
+    centerTextStyled(BLUE,BOLD,  "|                      4.   Payer Ticket                                    |");
+    centerTextStyled(BLUE,BOLD,  "|                      5.   Quitter                                         |");
+    centerTextStyled(BLUE,BOLD,  "|                                                                           |");
+    centerTextStyled(BLUE,BOLD,  "|                                                                           |");
+    centerTextStyled(BLUE,BOLD,  "+---------------------------------------------------------------------------+\n\n");
+}
+
+void Menu_principal_reser() {
+    centerTextStyled(GREEN,BOLD,  "|+------------------------ Reservation -----------------------+ |");
+    centerTextStyled(GREEN,BOLD,  "|                                                               |");
+    centerTextStyled(GREEN,BOLD,  "|                      1.    trajet diponible                   |");
+    centerTextStyled(GREEN,BOLD,  "|                      2.    Reserver votre Bus                 |");
+    centerTextStyled(GREEN,BOLD,  "|                      3.    Payement avec Mobile Money         |");
+    centerTextStyled(GREEN,BOLD,  "|                      4.    Quitter                            |");
+    centerTextStyled(GREEN,BOLD,  "|                                                               |");
+    centerTextStyled(GREEN,BOLD,  "+---------------------------------------------------------------+\n\n");
+
+}
 
 // Fonction permettant d'afficher le menu principal
-
-void afficherMenu()
-{
-    // Imprimer le message de bienvenue et les options
-
-    printf("|+------------------------ TRANSACTION AVEC  MOBILE MONEY  -----------------------+ |\n");
-    printf("|                                                                                   |\n");
-    printf("|                         0. Verifier le solde.                                     |\n");
-    printf("|                         1. Effectuer un depot.                                    |\n");
-    printf("|                         2. Effectuer un retrait.                                  |\n");
-    printf("|                         3. Afficher les transactions.                             |\n");
-    printf("|                         5.      Quitter                                           |\n");
-    printf("|+----------------------------------------------------------------------------------+ \n\n");
+void afficherMenu() {
+    centerTextStyled(CYAN, BOLD, "|+------------------------ TRANSACTION AVEC  MOBILE MONEY  -----------------------+ |");
+    centerText("|                                                                                   |");
+    centerText("|                         0. Verifier le solde.                                     |");
+    centerText("|                         1. Effectuer un depot.                                    |");
+    centerText("|                         2. Effectuer un retrait.                                  |");
+    centerText("|                         3. Afficher les transactions.                             |");
+    centerText("|                         5.      Quitter                                           |");
+    centerTextStyled(CYAN, BOLD, "|+----------------------------------------------------------------------------------+ \n\n");
 }
 
 // Fonction permettant d'afficher les options de devises
-
-void afficherDevisesOptions()
-{
-    // Imprimer les options devises
-
-    printf("\n Selectionnez une devise :\n\n");
-    printf("--> 0. USD.\n");
-    printf("--> 1. FC.\n\n");
+void afficherDevisesOptions() {
+    centerText("\n Selectionnez une devise :\n\n");
+    centerText("--> 0. USD.");
+    centerText("--> 1. FC.\n\n");
 }
 
 // Fonction de gestion des soldes des comptes
-
-void gererSoldes()
-{
-    // Variable permettant de stocker le choix de la devise de l'utilisateur
+void gererSoldes() {
     int devise;
-
-    // Afficher le menu
     afficherMenu();
+    system("clear");
 
-    // Effacer la console
-    system("cls");
-
-    printf("\t\t+------------Verifier votre solde------------------------+\n\n");
-
-    // Afficher option devise
+    centerText("\t\t+------------Verifier votre solde------------------------+\n\n");
     afficherDevisesOptions();
-
-    // Invite l'utilisateur � choisir une devise
     printf("Choisissez une option :");
-
-    // R�cup�rer le choix de l'utilisateur
     scanf("%d", &devise);
 
-    // G�rer le choix de l'utilisateur
-    switch(devise)
-    {
+    switch(devise) {
         case 0:
-            // Si l'utilisateur a choisi USD, imprimer le solde en USD
-            printf("\nVotre solde en USD est de %.2f USD\n\n\n", verifierSolde(devise));
+            centerTextFormatted("\nVotre solde en USD est de %.2f USD\n\n\n", verifierSolde(devise));
             break;
         case 1:
-            // Si l'utilisateur a choisi FC, imprimer le solde en FC
-            printf("\nVotre solde en FC est de %.2f FC\n\n\n", verifierSolde(devise));
+            centerTextFormatted("\nVotre solde en FC est de %.2f FC\n\n\n", verifierSolde(devise));
             break;
     }
 }
 
-// Fonction permettant de traiter les op�rations de d�p�t
-
-void gererDepot()
-{
-    // Variables pour stocker le choix de la devise et le montant du d�p�t de l'utilisateur
+// Fonction permettant de traiter les opérations de dépôt
+void gererDepot() {
     int devise, montantDepot;
-
-    // Afficher le menu
     afficherMenu();
+    system("cls");
 
-    // Effacer la console
-    system("clear");
-
-    printf("\t\tEffectuer un depot\n\n");
-
-    // Afficher option devise
+    centerText("\t\tEffectuer un depot\n\n");
     afficherDevisesOptions();
-
-    // Inviter l'utilisateur � choisir une devise
     printf("Choisissez une option :");
-
-     // R�cup�rer le choix de l'utilisateur
     scanf("%d", &devise);
 
-    // Invite l'utilisateur � saisir le montant du d�p�t
     printf("Saisir le montant :");
-
-    // R�cup�rer le montant du d�p�t
     scanf("%d", &montantDepot);
 
-    // Effectuer l'op�ration de d�p�t
-    effectuerDepot(devise,montantDepot);
+    effectuerDepot(devise, montantDepot);
 }
 
-// Fonction permettant de traiter les op�rations de retrait
-
-void gererRetrait()
-{
-    // Variables pour stocker le choix de la devise de l'utilisateur et le montant du retrait
+// Fonction permettant de traiter les opérations de retrait
+void gererRetrait() {
     int devise, montantRetrait;
-
-    // Afficher le menu
     afficherMenu();
-
-    // Effacer la console
     system("clear");
 
-    printf("\t\tEffectuer un retrait\n\n");
-
-    // Afficher option devise
+    centerText("\t\tEffectuer un retrait\n\n");
     afficherDevisesOptions();
-
-    // Inviter l'utilisateur � choisir une devise
     printf("Choisissez une option :");
-
-    // R�cup�rer le choix de l'utilisateur
     scanf("%d", &devise);
 
-    // Invite l'utilisateur � saisir le montant du retrait
     printf("Saisir le montant :");
-
-   // R�cup�rer le montant du retrait
     scanf("%d", &montantRetrait);
 
-    // Effectuer l'op�ration de retrait
-    effectuerRetrait(devise,montantRetrait);
+    effectuerRetrait(devise, montantRetrait);
 }
 
 // Fonction permettant d'afficher l'historique des transactions
-
-void gererTransactions()
-{
-
-    // Afficher le menu
+void gererTransactions() {
     afficherMenu();
-
-    // Effacer la console
     system("clear");
 
-    printf("\t\tListe des trasanctions effectuees\n\n");
-
+    centerText("\t\tListe des transactions effectuees\n\n");
     afficherTransactions();
 }
+
+
+
+

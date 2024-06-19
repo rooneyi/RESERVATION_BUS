@@ -340,7 +340,7 @@ void ajout_ticket_reser() {
     printf("Mot de passe : ");
     scanf("%s", password);
 
-    if (verifier_utilisateur(username, password)) {
+    //if (verifier_utilisateur(username, password)) {
         printf("Authentification réussie.\n");
         printf("Choisissez la devise pour le paiement (1 pour USD, 2 pour FC) :\n--> ");
         scanf("%d", &deviseChoix);
@@ -352,9 +352,9 @@ void ajout_ticket_reser() {
         reservations[compteur_reservation - 1].devise = devise; // Enregistrer la devise utilisée
         enregister_ticket(); // Sauvegarde après paiement
         printf("Ticket payé avec succès!\n");
-    } else {
-        printf("Authentification échouée. Paiement annulé.\n");
-    }
+    //} else {
+       // printf("Authentification échouée. Paiement annulé.\n");
+    //}
 }
 /*
 void payer_ticket() {

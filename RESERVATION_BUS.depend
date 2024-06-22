@@ -1,0 +1,77 @@
+# depslib dependency file v1.0
+1718483305 source:/home/kalumba/Bureau/reservation_essaie/main.c
+	<stdio.h>
+	<stdlib.h>
+	"starter.h"
+
+1718486003 /home/kalumba/Bureau/reservation_essaie/starter.h
+
+1718487321 source:/home/kalumba/Bureau/reservation_essaie/starter.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"menu.h"
+	"operation.h"
+
+1718485766 /home/kalumba/Bureau/reservation_essaie/menu.h
+
+1718485928 /home/kalumba/Bureau/reservation_essaie/operation.h
+
+1718487518 source:/home/kalumba/Bureau/reservation_essaie/menu.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
+	"operation.h"
+
+1718485877 source:/home/kalumba/Bureau/reservation_essaie/operation.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"constants.h"
+	"dataStores.h"
+
+1718486155 /home/kalumba/Bureau/reservation_essaie/constants.h
+
+1718486206 /home/kalumba/Bureau/reservation_essaie/dataStores.h
+	<stdlib.h>
+
+1718491730 source:/home/kalumba/RESERVATION_BUS/main.c
+	<stdio.h>
+	<stdlib.h>
+	"starter.h"
+
+1718486003 /home/kalumba/RESERVATION_BUS/starter.h
+
+1718487518 source:/home/kalumba/RESERVATION_BUS/menu.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<stdlib.h>
+	"operation.h"
+
+1718485928 /home/kalumba/RESERVATION_BUS/operation.h
+
+1718491528 source:/home/kalumba/RESERVATION_BUS/operation.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"constants.h"
+	"dataStores.h"
+
+1718486155 /home/kalumba/RESERVATION_BUS/constants.h
+
+1718486206 /home/kalumba/RESERVATION_BUS/dataStores.h
+	<stdlib.h>
+
+1718492196 source:/home/kalumba/RESERVATION_BUS/starter.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"menu.h"
+	"operation.h"
+
+1718485766 /home/kalumba/RESERVATION_BUS/menu.h
+
